@@ -3,6 +3,7 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 Future<void> main() async {
   runApp(
@@ -21,7 +22,7 @@ class BeeHoney extends FlameGame with KeyboardEvents {
     bg
       ..sprite = await Sprite.load("bg.png")
       ..size.x = 415
-      ..size.y = 730
+      ..size.y = 900
       ..position = Vector2(0, 0);
 
     add(bg);
@@ -29,15 +30,15 @@ class BeeHoney extends FlameGame with KeyboardEvents {
     bg2
       ..sprite = await Sprite.load("bg.png")
       ..size.x = 415
-      ..size.y = 730
-      ..position = Vector2(0, -730);
+      ..size.y = 900
+      ..position = Vector2(0, -900);
 
     add(bg2);
 
     bee
       ..sprite = await Sprite.load("bee1.png")
       ..size = Vector2.all(50)
-      ..position = Vector2(250, 250)
+      ..position = Vector2(195, 760)
       ..anchor = Anchor.center;
 
     add(bee);
@@ -45,23 +46,23 @@ class BeeHoney extends FlameGame with KeyboardEvents {
   }
 
   @override
-  void update(double dt) {
-    bg.move(dt, 100, 730, 0);
-    bg2.move(dt, 100, 0, -730);
-    super.update(dt);
+  void update(double deltaTime) {
+    bg.move(deltaTime, 100, 900, 0);
+    bg2.move(deltaTime, 100, 0, -900);
+    super.update(deltaTime);
 
   }
 
-  // @override
-  // KeyEventResult onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-  //   if(event.data.keyLabel == "a") {
-  //     bee.x -= 1;
-  //   }
-  //   if(event.data.keyLabel == "d") {
-  //     bee.x += 1;
-  //   }
-  //   return super.onKeyEvent(event, keysPressed);
-  // }
+  @override
+  KeyEventResult onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    if(event.data.keyLabel == "a") {
+      bee.x -= 1;
+    }
+    if(event.data.keyLabel == "d") {
+      bee.x += 1;
+    }
+    return super.onKeyEvent(event, keysPressed);
+  }
 
 }
 

@@ -46,10 +46,10 @@ class BeeHoney extends FlameGame with KeyboardEvents {
   }
 
   @override
-  void update(double deltaTime) {
-    bg.move(deltaTime, 100, 900, 0);
-    bg2.move(deltaTime, 100, 0, -900);
-    super.update(deltaTime);
+  void update(double dt) {
+    bg.move(dt, 100, 900, 0);
+    bg2.move(dt, 100, 0, -900);
+    super.update(dt);
 
   }
 

@@ -1,10 +1,13 @@
 import 'package:beehoney/Classes/bee.dart';
 import 'package:beehoney/Classes/bg.dart';
 import 'package:beehoney/Classes/flower.dart';
+import 'package:beehoney/Classes/game_text.dart';
 import 'package:beehoney/Classes/spider.dart';
+import 'package:beehoney/game/utils/utils.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
+import 'package:flame/palette.dart';
 import 'package:flutter/services.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +18,9 @@ class BeeHoney extends FlameGame with KeyboardEvents, HasCollisionDetection {
   Bee bee = Bee();
   Spider spider = Spider();
   Flower flower = Flower();
+
+  GameText textScore = GameText(text: "Score: ", x: 10, y: 10, color: BasicPalette.black.color);
+  GameText textLives = GameText(text: "Lives: ", x: 300, y: 10, color: BasicPalette.black.color);
 
   @override
   Future<void>? onLoad() async {
@@ -61,6 +67,9 @@ class BeeHoney extends FlameGame with KeyboardEvents, HasCollisionDetection {
 
     add(flower);
 
+    add(textScore);
+    add(textLives);
+
     return super.onLoad();
   }
 
@@ -77,6 +86,14 @@ class BeeHoney extends FlameGame with KeyboardEvents, HasCollisionDetection {
 
     flower.move(dt: dt, speed: 200);
     flower.animate(timerLimit: 8, spriteLimit: 2);
+
+    if(gameOver) {
+      pauseEngine();
+      overlays.add("GameOver");
+    }
+
+    textScore.text = scoreLabel + score.toString();
+    textLives.text = livesLabel + lives.toString();
 
     super.update(dt);
   }

@@ -1,6 +1,7 @@
 import 'package:beehoney/Classes/flower.dart';
 import 'package:beehoney/Classes/spider.dart';
 import 'package:beehoney/Classes/sprite_model.dart';
+import 'package:beehoney/game/utils/utils.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
@@ -33,11 +34,16 @@ class Bee extends SpriteModel with CollisionCallbacks {
 
     if(other is Spider) {
       other.position.y = -100;
+      lives -= 1;
+      if (lives <= 0) {
+        gameOver = true;
+      }
     }
 
     if(other is Flower) {
       other.position.y = -100;
       other.position.x = Flower().random(min: 50, max: 500);
+      score += 1;
     }
   }
 
